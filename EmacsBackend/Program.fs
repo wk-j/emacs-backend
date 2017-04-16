@@ -5,10 +5,14 @@ open Suave.Filters
 open Suave.Operators
 open Suave.Successful
 
+module Api =
+    let getDotCakeLocation() =
+        ""
+
 let app =
     choose
       [ GET >=> choose
-          [ path "/hello" >=> OK "Hello GET"
+          [ path "/getDotCakeLocation" >=> OK "Hello GET"
             path "/goodbye" >=> OK "Good bye GET"]]
 
 [<EntryPoint>]

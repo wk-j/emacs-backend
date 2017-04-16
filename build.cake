@@ -5,6 +5,12 @@ var projectName = "EmacsBackend";
 var sln = $"{projectName}.sln";
 var project = $"{projectName}/{projectName}.fsproj";
 
+Action<string,string> process = (cmd, args) => {
+    StartProcess(cmd, new ProcessSettings {
+        Arguments = args
+    });
+};
+
 Task("Restore").Does(() => {
     PaketRestore(new PaketRestoreSettings {
         Project = project
@@ -12,7 +18,12 @@ Task("Restore").Does(() => {
 });
 
 Task("Build").Does(() => {
-    DotNetBuild(sln);
+    MSBuild(sln);
+});
+
+Task("Test").Does(() => {
+    var path = $"{projectName}.Tests/bin/Debug/{projectName}.Tests.exe";
+    process("mono", path);
 });
 
 var target = Argument("target", "default");
