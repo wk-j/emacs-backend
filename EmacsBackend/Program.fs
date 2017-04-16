@@ -62,5 +62,5 @@ let app =
 [<EntryPoint>]
 let main argv =
     // printfn "%A" argv
-    startWebServer defaultConfig app
+    startWebServer { defaultConfig with bindings= [Suave.Http.HttpBinding.createSimple HTTP "127.0.0.1" 9876] }  app
     0 // return an integer exit code
