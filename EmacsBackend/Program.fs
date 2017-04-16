@@ -7,14 +7,20 @@ open Suave.Successful
 open System.IO
 open System
 open Newtonsoft.Json
+open Newtonsoft.Json.Serialization
 
 type 'a Result = {
     Success: bool
     Data : 'a }
 
 module Util =
+    let settings =
+        let st  = JsonSerializerSettings()
+        st.ContractResolver <- CamelCasePropertyNamesContractResolver()
+        (st)
+
     let toJson (obj: 'a) =
-        JsonConvert.SerializeObject(obj)
+        JsonConvert.SerializeObject(obj, settings)
 
 module Api =
     let cakeName = "build.cake"
