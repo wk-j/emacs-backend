@@ -21,7 +21,16 @@ Task("Build").Does(() => {
     MSBuild(sln);
 });
 
-Task("Test").Does(() => {
+Task("Run")
+    .IsDependentOn("Build")
+    .Does(() => {
+            var path = $"{projectName}/bin/Debug/{projectName}.exe";
+            process("mono", path);
+     });
+
+Task("Test")
+    .IsDependentOn("Build")
+    .Does(() => {
     var path = $"{projectName}.Tests/bin/Debug/{projectName}.Tests.exe";
     process("mono", path);
 });
