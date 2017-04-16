@@ -43,6 +43,7 @@ let app =
         request (fun r ->
                  match r.queryParam "currentDir" with
                  | Choice1Of2 target ->
+                   printfn "-- Current Dir = %A" target
                    let dir = DirectoryInfo(target)
                    if dir.Exists then
                      Api.getDotLocation dir |> ok
@@ -50,6 +51,7 @@ let app =
                     { Success = false
                       Data = String.Empty } |> ok
                   | Choice2Of2 msg ->
+                    printfn "-- Error %A" msg
                     { Success = false
                       Data = String.Empty } |> ok )
 
